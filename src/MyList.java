@@ -10,7 +10,7 @@ public class MyList implements Collection{
     {
         size = 0;
     }
-    
+
     public MyList(){
         array = new String[DEFAULT_CAPACITY];
     }
