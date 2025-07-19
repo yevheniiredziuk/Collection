@@ -1,5 +1,26 @@
-public class MyList implements Collection{
+import java.util.ArrayList;
 
+public class MyList implements Collection{
+    ArrayList myList;
+    private int size;
+    private int capacity;
+    private String[] array;
+    private static final int DEFAULT_CAPACITY = 10;
+
+    {
+        size = 0;
+    }
+    
+    public MyList(){
+        array = new String[DEFAULT_CAPACITY];
+    }
+
+    public MyList(int capacity){
+        if(capacity < 0){
+            throw new IllegalArgumentException("capacity < 0");
+        }
+        this.capacity = capacity;
+    }
 
     @Override
     public boolean add(String o) {
@@ -43,6 +64,6 @@ public class MyList implements Collection{
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 }
