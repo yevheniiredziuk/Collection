@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-
 public class MyList implements Collection{
-    ArrayList myList;
     private int size;
     private int capacity;
     private String[] array;
@@ -44,7 +41,11 @@ public class MyList implements Collection{
 
     @Override
     public String get(int index) {
-        return "";
+       return "";
+    }
+
+    private boolean isIndexCorrect(int index) {
+        return (index >= 0) && (index < size);
     }
 
     @Override
@@ -62,6 +63,7 @@ public class MyList implements Collection{
         return false;
     }
 
+    //done
     @Override
     public int size() {
         return size;
