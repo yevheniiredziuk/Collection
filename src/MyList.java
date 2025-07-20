@@ -81,13 +81,25 @@ public class MyList implements Collection{
         return false;
     }
 
-    private boolean isEmpty(){
+    public boolean isEmpty(){
         return size == 0;
     }
 
-    // todo
+
     @Override
     public boolean equals(Collection collection) {
+        if(collection instanceof MyList list){
+            if(isEmpty() || (list.size() != this.size()) ){
+                return false;
+            }
+
+            for(int i = 0; i < size; i++){
+                if(!list.get(i).equals(array[i])){
+                    return false;
+                }
+            }
+            return true;
+        }
         return false;
     }
 
