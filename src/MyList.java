@@ -46,10 +46,38 @@ public class MyList implements Collection{
         return true;
     }
 
-    // todo
+    /**
+     * Deletes the first occurrence of the specified element from this list, if it is present.
+     * Shifts all right-sided elements to the left.
+     *
+     * <p>If the specified element is not found, the method returns {@code false}
+     * and the list will stay unchanged.</p>
+     *
+     * @param o the String element to delete (must not be {@code null})
+     * @return {@code true} if the element was found and deleted; {@code false} otherwise
+     * @throws IllegalArgumentException if {@code o} is {@code null}
+     */
     @Override
     public boolean delete(String o) {
+        if(o == null){
+            throw new IllegalArgumentException("o == null");
+        }
+        int index = indexOf(o);
+        if(index == -1){
+            return false;
+        }
+        arrayCopy(array, index+1, array, index, size-1-index);
+        array[--size] = null; // to delete last copied element
         return false;
+    }
+
+    public int indexOf(String o) {
+        for(int i = 0; i < size; i++){
+            if(array[i].equals(o)){ // I remembered you explanation about null
+                return i;           // we can write o.equals(array[i]) but what if o == null
+            }                       // so thank you so much for this tip! :)
+        }
+        return -1;
     }
 
     /**
@@ -107,14 +135,14 @@ public class MyList implements Collection{
     }
 
     /**
-     * Check if all elements of the internal array are equals to all elements in the
+     * Check if all elements of the internal {@code array}  are equals to all elements in the
      * argument's array
      *
      * @param collection can be only type of MyList
      *
-     * @return true only if argument has type of MyList and its elements are equal to
-     * internal array elements. If argument's type isn't instance of MyList -> return false.
-     * If the length of argument`s size doesn't equal to current collection size -> return false
+     * @return {@code true} only if argument {@code collection} has type of MyList and its elements are equal to
+     * internal {@code array} elements. If argument's type isn't instance of MyList -> return {@code false}.
+     * If the length of argument`s size doesn't equal to current collection size -> return {@code false}
      */
     @Override
     public boolean equals(Collection collection) {
@@ -139,10 +167,6 @@ public class MyList implements Collection{
      * and {@link #size()} will return 0
      *
      * @return false when collection is already empty otherwise return true
-     *
-     * <p>Note: This operation only removes references to the elements
-     * stored in this collection. The objects themselves are not destroyed,
-     * but may be garbage-collected if there are no other references to them</p>
      */
     @Override
     public boolean clear() {
@@ -156,7 +180,6 @@ public class MyList implements Collection{
         }
         return true;
     }
-
 
     @Override
     public int size() {
