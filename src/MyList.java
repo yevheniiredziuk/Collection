@@ -85,7 +85,16 @@ public class MyList implements Collection{
         return size == 0;
     }
 
-
+    /**
+     * Check if all elements of the internal array are equals to all elements in the
+     * argument's array
+     *
+     * @param collection can be only type of MyList
+     *
+     * @return true only if argument has type of MyList and its elements are equal to
+     * internal array elements. If argument's type isn't instance of MyList -> return false.
+     * If the length of argument`s size doesn't equal to current collection size -> return false
+     */
     @Override
     public boolean equals(Collection collection) {
         if(collection instanceof MyList list){
