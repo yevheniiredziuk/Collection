@@ -41,7 +41,10 @@ public class MyList implements Collection{
 
     @Override
     public String get(int index) {
-       return "";
+        if(!isIndexCorrect(index)){
+            throw new IndexOutOfBoundsException("incorrect index");
+        }
+        return array[index];
     }
 
     private boolean isIndexCorrect(int index) {
