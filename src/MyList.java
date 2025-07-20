@@ -16,14 +16,16 @@ public class MyList implements Collection{
         if(capacity < 0){
             throw new IllegalArgumentException("capacity < 0");
         }
-        this.capacity = capacity;
+        this.capacity = Math.max(capacity, DEFAULT_CAPACITY);
     }
 
+    // todo
     @Override
     public boolean add(String o) {
         return false;
     }
 
+    // todo
     @Override
     public boolean add(int index, String o) {
         return false;
@@ -31,9 +33,20 @@ public class MyList implements Collection{
 
     @Override
     public boolean set(int index, String o) {
-        return false;
+        if(index < 0 || index >= size){
+            throw new IllegalArgumentException("index < 0 || index >= size");
+        }
+        if(isEmpty()){
+            throw new IllegalStateException("list is empty");
+        }
+        if(o == null){
+            throw new IllegalArgumentException("o == null");
+        }
+        array[index] = o;
+        return true;
     }
 
+    // todo
     @Override
     public boolean delete(String o) {
         return false;
@@ -52,13 +65,14 @@ public class MyList implements Collection{
         return (index >= 0) && (index < size);
     }
 
+    //done
     @Override
     public boolean contain(String o) {
         if(o == null){
             throw new IllegalArgumentException("o == null");
         }
         if(isEmpty()){
-            return false;
+            throw new IllegalStateException("list is empty");
         }
         for(int i = 0; i < size; i++){
             if(array[i].equals(o)){
@@ -71,17 +85,20 @@ public class MyList implements Collection{
     private boolean isEmpty(){
         return size == 0;
     }
+
+    // todo
     @Override
     public boolean equals(Collection collection) {
         return false;
     }
 
+    // todo
     @Override
     public boolean clear() {
         return false;
     }
 
-    //done
+
     @Override
     public int size() {
         return size;
