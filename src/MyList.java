@@ -65,7 +65,6 @@ public class MyList implements Collection{
         return (index >= 0) && (index < size);
     }
 
-    //done
     @Override
     public boolean contain(String o) {
         if(o == null){
@@ -92,10 +91,28 @@ public class MyList implements Collection{
         return false;
     }
 
-    // todo
+    /**
+     * Removes all elements from this collection.
+     * After calling this method, the collection will be empty
+     * and {@link #size()} will return 0
+     *
+     * @return false when collection is already empty otherwise return true
+     *
+     * <p>Note: This operation only removes references to the elements
+     * stored in this collection. The objects themselves are not destroyed,
+     * but may be garbage-collected if there are no other references to them</p>
+     */
     @Override
     public boolean clear() {
-        return false;
+        if(isEmpty()){
+            return false;
+        }
+        int oldSize = size;
+        size = 0;
+        for(int i = oldSize; i > 0; i--){
+            array[i] = null;
+        }
+        return true;
     }
 
 
