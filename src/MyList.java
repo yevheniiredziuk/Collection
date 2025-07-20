@@ -39,6 +39,7 @@ public class MyList implements Collection{
         return false;
     }
 
+    // done
     @Override
     public String get(int index) {
         if(!isIndexCorrect(index)){
@@ -53,9 +54,23 @@ public class MyList implements Collection{
 
     @Override
     public boolean contain(String o) {
+        if(o == null){
+            throw new IllegalArgumentException("o == null");
+        }
+        if(isEmpty()){
+            return false;
+        }
+        for(int i = 0; i < size; i++){
+            if(array[i].equals(o)){
+                return true;
+            }
+        }
         return false;
     }
 
+    private boolean isEmpty(){
+        return size == 0;
+    }
     @Override
     public boolean equals(Collection collection) {
         return false;
