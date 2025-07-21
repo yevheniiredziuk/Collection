@@ -4,12 +4,10 @@ public class MyList implements Collection{
     private String[] array;
     private static final int DEFAULT_CAPACITY = 10;
 
-    {
-        size = 0;
-    }
 
     public MyList(){
-        array = new String[DEFAULT_CAPACITY];
+        capacity = DEFAULT_CAPACITY;
+        this.array = new String[DEFAULT_CAPACITY];
     }
 
     public MyList(int capacity){
@@ -17,23 +15,32 @@ public class MyList implements Collection{
             throw new IllegalArgumentException("capacity < 0");
         }
         this.capacity = Math.max(capacity, DEFAULT_CAPACITY);
+        this.array = new String[this.capacity];
     }
 
     // todo
     @Override
     public boolean add(String o) {
+        add(size, o);
         return false;
     }
 
-    // todo
-    @Override
-    public boolean add(int index, String o) {
 
-        return false;
+    @Override
+    public void add(int index, String o) {
+        if(index < 0 || index > size){
+            throw new IllegalArgumentException("index < 0 || index > size");
+        } // Objects.checkIndex(index, size) alternatively
+        if(size == capacity){
+            array = makeLarger();
+        }
+        arrayCopy(array, index, array, index+1, size - index);
+        array[index] = o;
+        size++;
     }
 
     private String[] makeLarger(){
-        this.capacity = capacity*2;
+        capacity = capacity*2;
         String[] newArray = new String[capacity];
         arrayCopy(array,0,newArray,0,size);
         return newArray;
@@ -88,23 +95,50 @@ public class MyList implements Collection{
         return -1;
     }
 
+//    /**
+//     * Copies elements from the source String array to the destination String array
+//     *
+//     * <p>The number of elements copied is equal to {@code length},
+//     * starting from {@code srcPos} in the source array
+//     * and placing them into the destination array starting from {@code destPos}.</p>
+//     *
+//     * @param src the source array of Strings
+//     * @param srcPos starting position in the source array
+//     * @param dest the destination array of Strings
+//     * @param destPos starting position in the destination array
+//     * @param length the number of elements to copy
+//     * @throws NullPointerException if {@code src} or {@code dest} is {@code null}
+//     */
+//    private static void arrayCopy(String[] src, int srcPos, String[] dest, int destPos, int length) {
+//        for (int i = 0; i < length; i++) {
+//            dest[destPos + i] = src[srcPos + i];
+//        }
+//    }
+
+
     /**
-     * Copies elements from the source String array to the destination String array
+     * Copies elements from the source array to the destination array.
+     * Correctly handles the case when src and dest are the same array.
      *
-     * <p>The number of elements copied is equal to {@code length},
-     * starting from {@code srcPos} in the source array
-     * and placing them into the destination array starting from {@code destPos}.</p>
-     *
-     * @param src the source array of Strings
-     * @param srcPos starting position in the source array
-     * @param dest the destination array of Strings
+     * @param src     the source array
+     * @param srcPos  starting position in the source array
+     * @param dest    the destination array
      * @param destPos starting position in the destination array
-     * @param length the number of elements to copy
-     * @throws NullPointerException if {@code src} or {@code dest} is {@code null}
+     * @param length  the number of elements to copy
+     * @throws NullPointerException if src or dest is null
+     * @throws ArrayIndexOutOfBoundsException if copying would cause access outside array bounds
      */
     private static void arrayCopy(String[] src, int srcPos, String[] dest, int destPos, int length) {
-        for (int i = 0; i < length; i++) {
-            dest[destPos + i] = src[srcPos + i];
+        if (src == dest && srcPos < destPos) {
+            // copy backwards
+            for (int i = length - 1; i >= 0; i--) {
+                dest[destPos + i] = src[srcPos + i];
+            }
+        } else {
+            // copy forwards
+            for (int i = 0; i < length; i++) {
+                dest[destPos + i] = src[srcPos + i];
+            }
         }
     }
 
@@ -183,7 +217,7 @@ public class MyList implements Collection{
         }
         int oldSize = size;
         size = 0;
-        for(int i = oldSize; i > 0; i--){
+        for(int i = oldSize; i >= 0; i--){
             array[i] = null;
         }
         return true;
@@ -193,4 +227,13 @@ public class MyList implements Collection{
     public int size() {
         return size;
     }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < size; i++){
+            sb.append(array[i]).append(" ");
+        }
+        return sb.toString();
+    }
+
 }

@@ -1,6 +1,6 @@
 public interface Collection {
     boolean add(String o); //- add element
-    boolean add(int index, String o); //- add element by index
+    void add(int index, String o); //- add element by index
     boolean set(int index, String o);
     boolean delete (String o);
     String get(int index);
