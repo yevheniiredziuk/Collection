@@ -167,7 +167,7 @@ public class MyList implements Collection {
      */
     @Override
     public boolean equals(Collection collection) {
-        if (collection instanceof MyList list) {
+        if (collection instanceof Collection list) {
             if (isEmpty() || (list.size() != this.size())) {
                 return false;
             }
