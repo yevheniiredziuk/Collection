@@ -28,7 +28,15 @@ public class MyList implements Collection{
     // todo
     @Override
     public boolean add(int index, String o) {
+
         return false;
+    }
+
+    private String[] makeLarger(){
+        this.capacity = capacity*2;
+        String[] newArray = new String[capacity];
+        arrayCopy(array,0,newArray,0,size);
+        return newArray;
     }
 
     @Override
