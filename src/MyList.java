@@ -18,11 +18,11 @@ public class MyList implements Collection{
         this.array = new String[this.capacity];
     }
 
-    // todo
+
     @Override
     public boolean add(String o) {
         add(size, o);
-        return false;
+        return true;
     }
 
 
@@ -94,26 +94,6 @@ public class MyList implements Collection{
         }
         return -1;
     }
-
-//    /**
-//     * Copies elements from the source String array to the destination String array
-//     *
-//     * <p>The number of elements copied is equal to {@code length},
-//     * starting from {@code srcPos} in the source array
-//     * and placing them into the destination array starting from {@code destPos}.</p>
-//     *
-//     * @param src the source array of Strings
-//     * @param srcPos starting position in the source array
-//     * @param dest the destination array of Strings
-//     * @param destPos starting position in the destination array
-//     * @param length the number of elements to copy
-//     * @throws NullPointerException if {@code src} or {@code dest} is {@code null}
-//     */
-//    private static void arrayCopy(String[] src, int srcPos, String[] dest, int destPos, int length) {
-//        for (int i = 0; i < length; i++) {
-//            dest[destPos + i] = src[srcPos + i];
-//        }
-//    }
 
 
     /**

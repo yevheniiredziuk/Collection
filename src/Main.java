@@ -8,8 +8,13 @@ public class Main {
         list.add("e");
         list.add(1,"f");
         System.out.println(list);
-        list.clear();
+        //list.clear();
+
+        list.set(0,"g");
+        list.delete("d");
         System.out.println(list);
+        System.out.println(list.get(0));
+        System.out.println(list.contain("f"));
 
 
     }
