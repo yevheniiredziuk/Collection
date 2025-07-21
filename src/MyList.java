@@ -1,17 +1,17 @@
-public class MyList implements Collection{
+public class MyList implements Collection {
     private int size;
     private int capacity;
     private String[] array;
     private static final int DEFAULT_CAPACITY = 10;
 
 
-    public MyList(){
+    public MyList() {
         capacity = DEFAULT_CAPACITY;
         this.array = new String[DEFAULT_CAPACITY];
     }
 
-    public MyList(int capacity){
-        if(capacity < 0){
+    public MyList(int capacity) {
+        if (capacity < 0) {
             throw new IllegalArgumentException("capacity < 0");
         }
         this.capacity = Math.max(capacity, DEFAULT_CAPACITY);
@@ -28,33 +28,33 @@ public class MyList implements Collection{
 
     @Override
     public void add(int index, String o) {
-        if(index < 0 || index > size){
+        if (index < 0 || index > size) {
             throw new IllegalArgumentException("index < 0 || index > size");
         } // Objects.checkIndex(index, size) alternatively
-        if(size == capacity){
+        if (size == capacity) {
             array = makeLarger();
         }
-        arrayCopy(array, index, array, index+1, size - index);
+        arrayCopy(array, index, array, index + 1, size - index);
         array[index] = o;
         size++;
     }
 
-    private String[] makeLarger(){
-        capacity = capacity*2;
+    private String[] makeLarger() {
+        capacity = capacity * 2;
         String[] newArray = new String[capacity];
-        arrayCopy(array,0,newArray,0,size);
+        arrayCopy(array, 0, newArray, 0, size);
         return newArray;
     }
 
     @Override
     public boolean set(int index, String o) {
-        if(index < 0 || index >= size){
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("index < 0 || index >= size");
         }
-        if(isEmpty()){
+        if (isEmpty()) {
             throw new IllegalStateException("list is empty");
         }
-        if(o == null){
+        if (o == null) {
             throw new IllegalArgumentException("o == null");
         }
         array[index] = o;
@@ -74,21 +74,21 @@ public class MyList implements Collection{
      */
     @Override
     public boolean delete(String o) {
-        if(o == null){
+        if (o == null) {
             throw new IllegalArgumentException("o == null");
         }
         int index = indexOf(o);
-        if(index == -1){
+        if (index == -1) {
             return false;
         }
-        arrayCopy(array, index+1, array, index, size-1-index);
+        arrayCopy(array, index + 1, array, index, size - 1 - index);
         array[--size] = null; // to delete last copied element
         return false;
     }
 
     public int indexOf(String o) {
-        for(int i = 0; i < size; i++){
-            if(array[i].equals(o)){ // I remembered you explanation about null
+        for (int i = 0; i < size; i++) {
+            if (array[i].equals(o)) { // I remembered you explanation about null
                 return i;           // we can write o.equals(array[i]) but what if o == null
             }                       // so thank you so much for this tip! :)
         }
@@ -105,7 +105,7 @@ public class MyList implements Collection{
      * @param dest    the destination array
      * @param destPos starting position in the destination array
      * @param length  the number of elements to copy
-     * @throws NullPointerException if src or dest is null
+     * @throws NullPointerException           if src or dest is null
      * @throws ArrayIndexOutOfBoundsException if copying would cause access outside array bounds
      */
     private static void arrayCopy(String[] src, int srcPos, String[] dest, int destPos, int length) {
@@ -126,7 +126,7 @@ public class MyList implements Collection{
     // done
     @Override
     public String get(int index) {
-        if(!isIndexCorrect(index)){
+        if (!isIndexCorrect(index)) {
             throw new IndexOutOfBoundsException("incorrect index");
         }
         return array[index];
@@ -138,21 +138,21 @@ public class MyList implements Collection{
 
     @Override
     public boolean contain(String o) {
-        if(o == null){
+        if (o == null) {
             throw new IllegalArgumentException("o == null");
         }
-        if(isEmpty()){
+        if (isEmpty()) {
             throw new IllegalStateException("list is empty");
         }
-        for(int i = 0; i < size; i++){
-            if(array[i].equals(o)){
+        for (int i = 0; i < size; i++) {
+            if (array[i].equals(o)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
@@ -161,20 +161,19 @@ public class MyList implements Collection{
      * argument's array
      *
      * @param collection can be only type of MyList
-     *
      * @return {@code true} only if argument {@code collection} has type of MyList and its elements are equal to
      * internal {@code array} elements. If argument's type isn't instance of MyList -> return {@code false}.
      * If the length of argument`s size doesn't equal to current collection size -> return {@code false}
      */
     @Override
     public boolean equals(Collection collection) {
-        if(collection instanceof MyList list){
-            if(isEmpty() || (list.size() != this.size()) ){
+        if (collection instanceof MyList list) {
+            if (isEmpty() || (list.size() != this.size())) {
                 return false;
             }
 
-            for(int i = 0; i < size; i++){
-                if(!list.get(i).equals(array[i])){
+            for (int i = 0; i < size; i++) {
+                if (!list.get(i).equals(array[i])) {
                     return false;
                 }
             }
@@ -188,18 +187,11 @@ public class MyList implements Collection{
      * After calling this method, the collection will be empty
      * and {@link #size()} will return 0
      *
-     * @return false when collection is already empty otherwise return true
      */
     @Override
     public boolean clear() {
-        if(isEmpty()){
-            return false;
-        }
-        int oldSize = size;
+        array = new String[DEFAULT_CAPACITY];
         size = 0;
-        for(int i = oldSize; i >= 0; i--){
-            array[i] = null;
-        }
         return true;
     }
 
@@ -207,10 +199,11 @@ public class MyList implements Collection{
     public int size() {
         return size;
     }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             sb.append(array[i]).append(" ");
         }
         return sb.toString();
