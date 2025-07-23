@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        MyList list = new MyList();
+        MyList<String> list = new MyList();
         list.add(0,"a");
         list.add(1,"b");
         list.add(2,"c");

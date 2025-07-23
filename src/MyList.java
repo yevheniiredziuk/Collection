@@ -1,33 +1,35 @@
-public class MyList implements Collection {
+public class MyList<T> implements Collection <T>{
     private int size;
     private int capacity;
-    private String[] array;
+    private T[] array;
     private static final int DEFAULT_CAPACITY = 10;
 
 
+    @SuppressWarnings("unchecked")
     public MyList() {
         capacity = DEFAULT_CAPACITY;
-        this.array = new String[DEFAULT_CAPACITY];
+        this.array = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
+    @SuppressWarnings("unchecked")
     public MyList(int capacity) {
         if (capacity < 0) {
             throw new IllegalArgumentException("capacity < 0");
         }
         this.capacity = Math.max(capacity, DEFAULT_CAPACITY);
-        this.array = new String[this.capacity];
+        this.array = (T[]) new Object[this.capacity];
     }
 
 
     @Override
-    public boolean add(String o) {
+    public boolean add(T o) {
         add(size, o);
         return true;
     }
 
 
     @Override
-    public void add(int index, String o) {
+    public void add(int index, T o) {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("index < 0 || index > size");
         } // Objects.checkIndex(index, size) alternatively
@@ -39,15 +41,16 @@ public class MyList implements Collection {
         size++;
     }
 
-    private String[] makeLarger() {
+    @SuppressWarnings("unchecked")
+    private T[] makeLarger() {
         capacity = capacity * 2;
-        String[] newArray = new String[capacity];
+        T[] newArray = (T[]) new Object[capacity];
         arrayCopy(array, 0, newArray, 0, size);
         return newArray;
     }
 
     @Override
-    public boolean set(int index, String o) {
+    public boolean set(int index, T o) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("index < 0 || index >= size");
         }
@@ -73,7 +76,7 @@ public class MyList implements Collection {
      * @throws IllegalArgumentException if {@code o} is {@code null}
      */
     @Override
-    public boolean delete(String o) {
+    public boolean delete(T o) {
         if (o == null) {
             throw new IllegalArgumentException("o == null");
         }
@@ -86,7 +89,7 @@ public class MyList implements Collection {
         return false;
     }
 
-    public int indexOf(String o) {
+    public int indexOf(T o) {
         for (int i = 0; i < size; i++) {
             if (array[i].equals(o)) { // I remembered you explanation about null
                 return i;           // we can write o.equals(array[i]) but what if o == null
@@ -108,7 +111,7 @@ public class MyList implements Collection {
      * @throws NullPointerException           if src or dest is null
      * @throws ArrayIndexOutOfBoundsException if copying would cause access outside array bounds
      */
-    private static void arrayCopy(String[] src, int srcPos, String[] dest, int destPos, int length) {
+    private void arrayCopy(T[] src, int srcPos, T[] dest, int destPos, int length) {
         if (src == dest && srcPos < destPos) {
             // copy backwards
             for (int i = length - 1; i >= 0; i--) {
@@ -123,9 +126,8 @@ public class MyList implements Collection {
     }
 
 
-    // done
     @Override
-    public String get(int index) {
+    public T get(int index) {
         if (!isIndexCorrect(index)) {
             throw new IndexOutOfBoundsException("incorrect index");
         }
@@ -137,7 +139,7 @@ public class MyList implements Collection {
     }
 
     @Override
-    public boolean contain(String o) {
+    public boolean contain(T o) {
         if (o == null) {
             throw new IllegalArgumentException("o == null");
         }
@@ -166,8 +168,8 @@ public class MyList implements Collection {
      * If the length of argument`s size doesn't equal to current collection size -> return {@code false}
      */
     @Override
-    public boolean equals(Collection collection) {
-        if (collection instanceof Collection list) {
+    public boolean equals(Collection<T> collection) {
+        if (collection instanceof Collection<T> list) {
             if (isEmpty() || (list.size() != this.size())) {
                 return false;
             }
@@ -188,9 +190,10 @@ public class MyList implements Collection {
      * and {@link #size()} will return 0
      *
      */
+    @SuppressWarnings("unchecked")
     @Override
     public boolean clear() {
-        array = new String[DEFAULT_CAPACITY];
+        array = (T[]) new Object[DEFAULT_CAPACITY];
         size = 0;
         return true;
     }
